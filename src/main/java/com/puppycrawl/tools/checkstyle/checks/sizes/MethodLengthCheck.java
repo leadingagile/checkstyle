@@ -25,6 +25,7 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtil;
+import com.puppycrawl.tools.checkstyle.utils.TokenUtil;
 
 /**
  * <p>
@@ -144,8 +145,9 @@ public class MethodLengthCheck extends AbstractCheck {
             final DetailAST closingBrace =
                 openingBrace.findFirstToken(TokenTypes.RCURLY);
             final int length = getLengthOfBlock(openingBrace, closingBrace);
+            String methodName = ast.findFirstToken(TokenTypes.IDENT).getText();
             if (length > max) {
-                log(ast, MSG_KEY, length, max);
+                log(ast, MSG_KEY, length, max, methodName);
             }
         }
     }
